@@ -4,7 +4,7 @@ import SignupForm from "./signupForm";
 import { Button, Container, Stack } from "react-bootstrap";
 
 const AuthForm = () => {
-  const [isLoginForm, setIsLoginForm] = useState(false);
+  const [isLoginForm, setIsLoginForm] = useState(true);
 
   return (
     <Container className="p-4 border shadow-lg">

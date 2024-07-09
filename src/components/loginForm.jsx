@@ -18,12 +18,12 @@ const LoginForm = () => {
     // call axios to hit login endpoint
     const result = await loginUser(formData);
 
-    if (result.error) {
+    if (result.status === "error") {
       return toast.error(result.message);
     }
 
     // If Success
-
+    toast.success(result.message);
     // Store accessJWT in session  Storage
     // Store refreshJWT in local storage
     sessionStorage.setItem("accessJWT", result.data.accessJWT);
