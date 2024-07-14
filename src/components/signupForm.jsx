@@ -15,25 +15,22 @@ const initialFormData = {
 };
 
 const SignupForm = (props) => {
-  const { setIsLoginForm } = props;
   const { formData, handleOnChange } = useForm(initialFormData);
   const dispatch = useDispatch();
   const [isDisabled, setIsDisabled] = useState(true);
   const [isPasswordMatch, setIsPasswordMatch] = useState(null);
   const { isLoading } = useSelector((state) => state.user);
+  const { first_name, last_name, phone, email, password, confirm_password } =
+    formData;
 
   // handle form submission
   const handleOnSubmit = async (e) => {
     e.preventDefault();
     dispatch(signupUserAction(formData));
-    // Once a user is created, display login form
-    await setIsLoginForm(true);
   };
 
   // Use effect to dynamically check for form validity
   useEffect(() => {
-    const { first_name, last_name, phone, email, password, confirm_password } =
-      formData;
     if (password && confirm_password) {
       const isMatch = password === confirm_password;
       setIsPasswordMatch(isMatch);

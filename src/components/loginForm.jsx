@@ -1,8 +1,12 @@
-import { Button, Form } from "react-bootstrap";
+import { Button, Form, Spinner } from "react-bootstrap";
 import useForm from "../hooks/useForm";
 import CustomInput from "./CustomInput";
 import { loginUser } from "../axios/userAxios";
 import { toast } from "react-toastify";
+import { useDispatch, useSelector } from "react-redux";
+import { autoLoginAction, getUserAction } from "../redux/user/userAction";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const initialFormData = {
   email: "",
@@ -11,6 +15,9 @@ const initialFormData = {
 const LoginForm = () => {
   const { formData, handleOnChange } = useForm(initialFormData);
   const { email, password } = formData;
+  const { isLoading } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleOnSubmit = async (e) => {
     e.preventDefault();
@@ -30,7 +37,22 @@ const LoginForm = () => {
     localStorage.setItem("refreshJWT", result.data.refreshJWT);
 
     // Now get the user info
+    dispatch(getUserAction());
   };
+
+  // Logic to redirect user once logged in
+  const { user } = useSelector((state) => state.user);
+  useEffect(() => {
+    // if logged in navigate to required route
+    if (user?._id) {
+      navigate("/admin");
+    }
+
+    // if not logged in, auyo login logic
+    if (!user?._id) {
+      dispatch(autoLoginAction());
+    }
+  }, [user?._id, navigate, dispatch]);
 
   return (
     <Form onSubmit={(e) => handleOnSubmit(e)}>
@@ -59,7 +81,17 @@ const LoginForm = () => {
       />
 
       <Button variant="primary" type="submit">
-        Login
+        {isLoading ? (
+          <Spinner
+            as="span"
+            animation="border"
+            size="sm"
+            role="status"
+            aria-hidden="true"
+          />
+        ) : (
+          "Login"
+        )}
       </Button>
     </Form>
   );

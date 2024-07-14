@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   isLoading: false,
   isLoginForm: true,
+  user: {},
 };
 
 const userSlice = createSlice({
@@ -15,11 +16,14 @@ const userSlice = createSlice({
     setisLoginForm: (state, action) => {
       state.isLoginForm = action.payload;
     },
+    setUser: (state, action) => {
+      state.user = action.payload;
+    },
   },
 });
 
 const { reducer: userReducer, actions } = userSlice;
 
-export const { setIsLoading, setisLoginForm } = actions;
+export const { setIsLoading, setisLoginForm, setUser } = actions;
 
 export default userReducer;

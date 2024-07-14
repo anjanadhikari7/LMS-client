@@ -2,18 +2,16 @@ import { useState } from "react";
 import LoginForm from "./loginForm";
 import SignupForm from "./signupForm";
 import { Button, Container, Stack } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
+import { setisLoginForm } from "../redux/user/userSlice";
 
 const AuthForm = () => {
-  const [isLoginForm, setIsLoginForm] = useState(true);
-
+  const dispatch = useDispatch();
+  const { isLoginForm } = useSelector((state) => state.user);
   return (
     <Container className="p-4 border shadow-lg">
       <Stack gap={0}>
-        {isLoginForm ? (
-          <LoginForm />
-        ) : (
-          <SignupForm setIsLoginForm={setIsLoginForm} />
-        )}
+        {isLoginForm ? <LoginForm /> : <SignupForm />}
 
         {isLoginForm ? (
           <p>
@@ -21,7 +19,7 @@ const AuthForm = () => {
             <Button
               variant="link"
               className="p-0"
-              onClick={() => setIsLoginForm(false)}
+              onClick={() => dispatch(setisLoginForm(false))}
             >
               Sign Up
             </Button>
@@ -32,7 +30,7 @@ const AuthForm = () => {
             <Button
               variant="link"
               className="p-0"
-              onClick={() => setIsLoginForm(true)}
+              onClick={() => dispatch(setisLoginForm(true))}
             >
               Login
             </Button>

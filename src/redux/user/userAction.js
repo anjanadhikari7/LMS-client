@@ -1,7 +1,7 @@
 import { toast } from "react-toastify";
-import { createUser } from "../../axios/userAxios";
-import { useSelector } from "react-redux";
-import { setIsLoading } from "./userSlice";
+import { createUser, getAccessToken, getUser } from "../../axios/userAxios";
+
+import { setIsLoading, setisLoginForm, setUser } from "./userSlice";
 
 export const signupUserAction = (formData) => async (dispatch) => {
   dispatch(setIsLoading(true));
@@ -23,6 +23,42 @@ export const signupUserAction = (formData) => async (dispatch) => {
 
   toast.success(result.message);
   dispatch(setIsLoading(false));
-  // Once a user is created, display login form
-  //   dispatch(setIsLoginForm(true));
+  dispatch(setisLoginForm(true));
+};
+
+export const getUserAction = () => async (dispatch) => {
+  // call axios to get user
+
+  const result = await getUser();
+
+  if (result?.error) {
+    return toast.error(result.message);
+  }
+
+  dispatch(setUser(result.data));
+};
+
+//Auto Login
+
+export const autoLoginAction = () => async (dispatch) => {
+  // check if accesstoken wexists
+  const accessJWT = sessionStorage.getItem("accessJWT");
+  const refreshJWT = localStorage.getItem("refreshJWT");
+
+  // if no access token, get new access token basen on refresh token
+
+  if (!accessJWT && refreshJWT) {
+    // call axios to get new access token
+
+    const result = await getAccessToken();
+
+    if (result.status === "success") {
+      sessionStorage.setItem("accessJWT", result.data);
+      dispatch(getUserAction());
+      return;
+    }
+  }
+  //if access token is present, get user
+
+  dispatch(getUserAction());
 };
