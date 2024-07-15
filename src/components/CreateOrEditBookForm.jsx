@@ -40,8 +40,7 @@ const BOOK_FORM_FIELDS = [
 const CreateOrEditBookForm = (props) => {
   const { setShowModal, initialFormData } = props;
 
-  const isNewRecord = !initialFormData._id; // Check if it's a new record based on the presence of _id
-
+  const isNewRecord = !initialFormData.isbn;
   const dispatch = useDispatch();
 
   // Ensure formData includes _id for updating
