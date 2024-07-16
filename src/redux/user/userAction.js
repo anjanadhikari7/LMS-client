@@ -62,3 +62,19 @@ export const autoLoginAction = () => async (dispatch) => {
 
   dispatch(getUserAction());
 };
+
+// Logout user
+
+export const logoutUserAction = () => async (dispatch) => {
+  // call api to logout from api as well
+  const result = await logoutUser();
+
+  if (result.status === "error") {
+    return toast.error(result.message);
+  }
+  //remove tokens from browser
+  sessionStorage.removeItem("accessJWT");
+  localStorage.removeItem("refreshJWT");
+  // clear user state
+  dispatch(setUser({}));
+};

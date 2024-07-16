@@ -1,6 +1,6 @@
-import { Card, Col, Container, Row, Stack } from "react-bootstrap";
+import { Button, Card, Col, Container, Row, Stack } from "react-bootstrap";
 import { BsBook, BsBoxSeam, BsPerson, BsPersonCheck } from "react-icons/bs";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import SidebarItem from "./SidebarItem";
 import { useState } from "react";
 import { Outlet } from "react-router";
@@ -9,6 +9,8 @@ const AdminLayout = () => {
   const [activeItem, setActiveItem] = useState("Dashboard");
   const { user } = useSelector((state) => state.user);
   const { first_name, last_name } = user || {};
+  const dispatch = useDispatch();
+  const handleLogout = () => {};
 
   return (
     <Container fluid>
@@ -50,6 +52,15 @@ const AdminLayout = () => {
                 setActiveItem={setActiveItem}
               />
             </Stack>
+            <div className="mt-auto">
+              <Button
+                variant="outline-danger"
+                className="w-100"
+                onClick={handleLogout}
+              >
+                Logout
+              </Button>
+            </div>
           </Stack>
         </Col>
 

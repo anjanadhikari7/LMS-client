@@ -1,4 +1,5 @@
 import axios from "axios";
+import { setUser } from "../redux/user/userSlice";
 
 const USER_API_URL = "http://localhost:8000/api/user";
 //PUBLIC ROute| Endpoint
@@ -47,5 +48,25 @@ export const getAccessToken = () => {
     })
     .then((res) => res.data)
     .catch((error) => console.log(error));
+  return response;
+};
+
+// Logout user
+
+export const logoutUser = () => {
+  const response = axios
+    .post(
+      USER_API_URL + "/logout",
+      {},
+      {
+        headers: {
+          Authorization: sessionStorage.getItem("accessJWT"),
+        },
+      }
+    )
+    .then((res) => res.data)
+    .catch((error) => {
+      throw error;
+    });
   return response;
 };

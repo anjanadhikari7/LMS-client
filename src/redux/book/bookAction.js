@@ -46,12 +46,14 @@ export const updateBookAction = (bookObj) => async (dispatch) => {
 // Delete a book
 
 export const deleteBookAction = (bookId) => async (dispatch) => {
+  console.log(`Deleting item with id: ${bookId}`);
   const result = await deleteBook(bookId);
+
   if (result?.status === "error") {
     return toast.error(result.message);
   }
 
   toast.success(result.message);
-
+  console.log("Item deleted, fetching new list");
   dispatch(getBookAction());
 };
