@@ -1,5 +1,10 @@
 import { toast } from "react-toastify";
-import { createUser, getAccessToken, getUser } from "../../axios/userAxios";
+import {
+  createUser,
+  getAccessToken,
+  getUser,
+  logoutUser,
+} from "../../axios/userAxios";
 
 import { setIsLoading, setisLoginForm, setUser } from "./userSlice";
 
@@ -77,4 +82,5 @@ export const logoutUserAction = () => async (dispatch) => {
   localStorage.removeItem("refreshJWT");
   // clear user state
   dispatch(setUser({}));
+  toast.success(result.message);
 };

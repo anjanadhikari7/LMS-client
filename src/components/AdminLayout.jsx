@@ -4,13 +4,16 @@ import { useDispatch, useSelector } from "react-redux";
 import SidebarItem from "./SidebarItem";
 import { useState } from "react";
 import { Outlet } from "react-router";
+import { logoutUserAction } from "../redux/user/userAction";
 
 const AdminLayout = () => {
   const [activeItem, setActiveItem] = useState("Dashboard");
   const { user } = useSelector((state) => state.user);
   const { first_name, last_name } = user || {};
   const dispatch = useDispatch();
-  const handleLogout = () => {};
+  const handleLogout = () => {
+    dispatch(logoutUserAction());
+  };
 
   return (
     <Container fluid>

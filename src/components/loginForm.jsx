@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { autoLoginAction, getUserAction } from "../redux/user/userAction";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { setIsLoading } from "../redux/user/userSlice";
 
 const initialFormData = {
   email: "",
@@ -21,7 +22,7 @@ const LoginForm = () => {
 
   const handleOnSubmit = async (e) => {
     e.preventDefault();
-
+    dispatch(setIsLoading(true));
     // call axios to hit login endpoint
     const result = await loginUser(formData);
 
@@ -38,6 +39,7 @@ const LoginForm = () => {
 
     // Now get the user info
     dispatch(getUserAction());
+    dispatch(setIsLoading(false));
   };
 
   // Logic to redirect user once logged in
