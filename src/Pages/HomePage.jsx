@@ -1,15 +1,16 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getBookAction } from "../redux/book/bookAction";
-import { Container, Row } from "react-bootstrap";
+import { getBookAction, getBooksAction } from "../redux/book/bookAction";
+import { Col, Container, Row } from "react-bootstrap";
 import LibraryCarousel from "../components/LibraryCarousel";
+import BookCard from "../components/BookCard";
 
 const HomePage = () => {
   const { books } = useSelector((state) => state.book);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getBookAction());
+    dispatch(getBooksAction());
   }, [dispatch]);
 
   return (

@@ -6,6 +6,9 @@ import AdminPrivateRoute from "./components/AdminPrivateRoute";
 import BooksPage from "./Pages/BooksPage";
 import AdminLayout from "./components/AdminLayout";
 import StudentLayout from "./components/StudentLayout";
+import HomePage from "./Pages/HomePage";
+import BookDetailPage from "./Pages/BookDetailsPage";
+import StudentPrivateRoute from "./components/StudentPrivateRoute";
 
 function App() {
   return (
@@ -37,7 +40,7 @@ function App() {
             path="borrows"
             element={
               <StudentPrivateRoute>
-                <BorrowsPage />
+                {/* <p>"<BorrowsPage />"</p>  */}
               </StudentPrivateRoute>
             }
           />

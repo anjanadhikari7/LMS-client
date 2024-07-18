@@ -1,7 +1,7 @@
 import { Button, Dropdown, Nav, Navbar } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { logoutUserAction } from "../redux/userActions";
+import { logoutUserAction } from "../redux/user/userAction";
 
 const Header = () => {
   const {

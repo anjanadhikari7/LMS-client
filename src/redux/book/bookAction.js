@@ -4,12 +4,13 @@ import { toast } from "react-toastify";
 import {
   createBook,
   deleteBook,
+  getBook,
   getbooks,
   updateBook,
 } from "../../axios/bookAxios";
 import { setBooks } from "./bookSlice";
 
-export const getBookAction = () => async (dispatch) => {
+export const getBooksAction = () => async (dispatch) => {
   const result = await getbooks();
   if (result?.status === "error") {
     return toast.error(result.message);
@@ -28,7 +29,7 @@ export const createBookAction = (bookObj) => async (dispatch) => {
 
   toast.success(result.message);
 
-  dispatch(getBookAction());
+  dispatch(getBooksAction());
 };
 
 // Update a book
@@ -40,7 +41,7 @@ export const updateBookAction = (bookObj) => async (dispatch) => {
 
   toast.success(result.message);
 
-  dispatch(getBookAction());
+  dispatch(getBooksAction());
 };
 
 // Delete a book
@@ -55,5 +56,17 @@ export const deleteBookAction = (bookId) => async (dispatch) => {
 
   toast.success(result.message);
   console.log("Item deleted, fetching new list");
-  dispatch(getBookAction());
+  dispatch(getBooksAction());
+};
+
+// Get a book
+// get a books
+export const getBookAction = (_id) => async (dispatch) => {
+  const result = await getBook(_id);
+
+  if (result?.status === "error") {
+    return toast.error(result.message);
+  }
+
+  dispatch(setBook(result.data));
 };

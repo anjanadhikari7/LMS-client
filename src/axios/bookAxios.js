@@ -15,6 +15,16 @@ export const getbooks = () => {
 
   return response;
 };
+export const getBook = (_id) => {
+  const response = axios
+    .get(`${BOOK_API_URL}/${_id}`)
+    .then((res) => res.data)
+    .catch((error) => {
+      throw error;
+    });
+
+  return response;
+};
 
 // Private route
 

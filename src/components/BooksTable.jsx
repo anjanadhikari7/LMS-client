@@ -1,7 +1,7 @@
 import { Button, Stack, Table } from "react-bootstrap";
 import { BsPencil, BsTrash } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteBookAction, getBookAction } from "../redux/book/bookAction.js";
+import { deleteBookAction, getBooksAction } from "../redux/book/bookAction.js";
 import { useEffect } from "react";
 
 const BooksTable = (props) => {
@@ -24,7 +24,7 @@ const BooksTable = (props) => {
     setShowModal(true);
   };
   useEffect(() => {
-    dispatch(getBookAction());
+    dispatch(getBooksAction());
   }, [dispatch]);
   const handleOnDelete = (bookId) => {
     if (window.confirm("Are you sure you want to delete this book?")) {

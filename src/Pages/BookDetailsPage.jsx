@@ -1,0 +1,90 @@
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useParams } from "react-router-dom";
+import { getBookAction } from "../redux/book/bookAction";
+import { useEffect, useState } from "react";
+import {
+  Alert,
+  Badge,
+  Button,
+  Col,
+  Container,
+  Image,
+  Row,
+  Stack,
+} from "react-bootstrap";
+import BorrowBookModal from "../components/BorrowBookModal";
+
+const BookDetailPage = () => {
+  // get the book id from params
+  const { _id } = useParams();
+
+  // get book detail from api by dispatch action
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getBookAction(_id));
+  }, [dispatch, _id]);
+
+  const { book } = useSelector((state) => state.book);
+  const { user } = useSelector((state) => state.user);
+
+  const isBookAvailable = book.status === "available";
+  const isAuthenticated = user._id;
+
+  // State to control modal
+  const [showModal, setShowModal] = useState(false);
+
+  return (
+    <>
+      <Container className="my-2">
+        <Row>
+          <Col xs={4}>
+            <Image src={book.thumbnail} thumbnail />
+          </Col>
+
+          <Col xs={8}>
+            <Stack gap={1}>
+              <div className="fw-bold h1">{book.title}</div>
+              <div className="fst-italic">By {book.author}</div>
+              <div>Publish Year: {book.publish_year}</div>
+              <div>
+                <Badge bg="warning">ISBN: {book.isbn}</Badge>
+              </div>
+
+              {!isBookAvailable && (
+                <Alert variant="danger">
+                  Not Available, Available from:{" "}
+                  {format(new Date(book.due_date), "MMMM d, yyyy", "")}
+                </Alert>
+              )}
+
+              {isBookAvailable && isAuthenticated && (
+                <Button
+                  variant="outline-primary"
+                  onClick={() => setShowModal(true)}
+                >
+                  Borrow Book
+                </Button>
+              )}
+
+              {isBookAvailable && !isAuthenticated && (
+                <Link to="/auth" state={{ from: `/book/${_id}` }}>
+                  <Button variant="outline-danger">Login To Borrow Book</Button>
+                </Link>
+              )}
+            </Stack>
+          </Col>
+        </Row>
+
+        <Row className="mt-4">
+          <BookDescriptionAndReviewTab book={book} />
+        </Row>
+
+        <BorrowBookModal showModal={showModal} setShowModal={setShowModal} />
+      </Container>
+    </>
+  );
+};
+
+export default BookDetailPage;
