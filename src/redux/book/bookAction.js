@@ -8,7 +8,7 @@ import {
   getbooks,
   updateBook,
 } from "../../axios/bookAxios";
-import { setBooks } from "./bookSlice";
+import { setBook, setBooks } from "./bookSlice";
 
 export const getBooksAction = () => async (dispatch) => {
   const result = await getbooks();

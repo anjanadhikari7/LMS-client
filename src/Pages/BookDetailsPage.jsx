@@ -13,10 +13,16 @@ import {
   Stack,
 } from "react-bootstrap";
 import BorrowBookModal from "../components/BorrowBookModal";
+import { format } from "date-fns";
+import BookDescriptionAndReviewTab from "../components/BookDescriptionAndReviewtab";
 
 const BookDetailPage = () => {
   // get the book id from params
   const { _id } = useParams();
+  console.log("id", _id);
+  const { book } = useSelector((state) => state.book);
+
+  const { user } = useSelector((state) => state.user);
 
   // get book detail from api by dispatch action
 
@@ -24,10 +30,7 @@ const BookDetailPage = () => {
 
   useEffect(() => {
     dispatch(getBookAction(_id));
-  }, [dispatch, _id]);
-
-  const { book } = useSelector((state) => state.book);
-  const { user } = useSelector((state) => state.user);
+  }, [dispatch, getBookAction, _id]);
 
   const isBookAvailable = book.status === "available";
   const isAuthenticated = user._id;
@@ -52,7 +55,7 @@ const BookDetailPage = () => {
                 <Badge bg="warning">ISBN: {book.isbn}</Badge>
               </div>
 
-              {!isBookAvailable && (
+              {!isBookAvailable && book.due_date && (
                 <Alert variant="danger">
                   Not Available, Available from:{" "}
                   {format(new Date(book.due_date), "MMMM d, yyyy", "")}

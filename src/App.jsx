@@ -9,6 +9,7 @@ import StudentLayout from "./components/StudentLayout";
 import HomePage from "./Pages/HomePage";
 import BookDetailPage from "./Pages/BookDetailsPage";
 import StudentPrivateRoute from "./components/StudentPrivateRoute";
+import BorrowsPage from "./Pages/BorrowsPage";
 
 function App() {
   return (
@@ -34,13 +35,13 @@ function App() {
 
         <Route path="/" element={<StudentLayout />}>
           <Route path="/" element={<HomePage />} />
-          <Route path="book/:id" element={<BookDetailPage />} />
+          <Route path="book/:_id" element={<BookDetailPage />} />
 
           <Route
             path="borrows"
             element={
               <StudentPrivateRoute>
-                {/* <p>"<BorrowsPage />"</p>  */}
+                <BorrowsPage />
               </StudentPrivateRoute>
             }
           />

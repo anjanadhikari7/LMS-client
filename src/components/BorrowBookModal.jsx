@@ -2,7 +2,7 @@ import { add } from "date-fns";
 import { useState } from "react";
 import { Button, ButtonGroup, Modal, ToggleButton } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { createBorrowAction } from "../redux/borrow/borrowSlics";
+import { createBorrowAction } from "../redux/borrow/borrowAction";
 
 const BorrowBookModal = (props) => {
   const { showModal, setShowModal } = props;

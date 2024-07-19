@@ -1,40 +1,20 @@
-import { toast } from "react-toastify";
-import { setBorrows } from "./borrowSlice";
-import { createBorrow, getBorrows, returnBorrow } from "../axios/borrowAxios";
-import { getBookAction } from "./bookActions";
+import { createSlice } from "@reduxjs/toolkit";
 
-// get user burrows
-export const getBorrowsAction = () => async (dispatch) => {
-  const result = await getBorrows();
-
-  if (result?.status === "error") {
-    return toast.error(result.message);
-  }
-
-  dispatch(setBorrows(result.data));
+const initialState = {
+  borrows: [],
 };
 
-// create a burrow
-export const createBorrowAction = (borrowObj) => async (dispatch) => {
-  const result = await createBorrow(borrowObj);
+const borrowSlice = createSlice({
+  name: "borrow",
+  initialState,
+  reducers: {
+    setBorrows: (state, action) => {
+      state.borrows = action.payload;
+    },
+  },
+});
 
-  if (result?.status === "error") {
-    return toast.error(result.message);
-  }
+const { reducer: borrowReducer, actions } = borrowSlice;
 
-  // once a burrow is made, we get book details again
-  dispatch(getBookAction(borrowObj.book_id));
-};
-
-// update a burrow
-export const returnBorrowAction = (borrowId) => async (dispatch) => {
-  const result = await returnBorrow(borrowId);
-
-  if (result?.status === "error") {
-    return toast.error(result.message);
-  }
-
-  // once a burrow is reutrned, we get book details again
-  toast.success(result.message);
-  dispatch(getBorrowsAction());
-};
+export const { setBorrows } = actions;
+export default borrowReducer;

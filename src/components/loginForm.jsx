@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import { autoLoginAction, getUserAction } from "../redux/user/userAction";
 import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { setIsLoading } from "../redux/user/userSlice";
 
 const initialFormData = {
@@ -19,6 +19,7 @@ const LoginForm = () => {
   const { isLoading } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { state } = useLocation();
 
   const handleOnSubmit = async (e) => {
     e.preventDefault();
@@ -44,10 +45,12 @@ const LoginForm = () => {
 
   // Logic to redirect user once logged in
   const { user } = useSelector((state) => state.user);
+
+  const fromLocation = state?.from ? state.from : "/admin";
   useEffect(() => {
     // if logged in navigate to required route
     if (user?._id) {
-      navigate("/admin");
+      navigate(fromLocation);
     }
 
     // if not logged in, auyo login logic
