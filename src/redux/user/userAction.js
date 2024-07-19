@@ -2,11 +2,12 @@ import { toast } from "react-toastify";
 import {
   createUser,
   getAccessToken,
+  getAllUser,
   getUser,
   logoutUser,
 } from "../../axios/userAxios";
 
-import { setIsLoading, setisLoginForm, setUser } from "./userSlice";
+import { setIsLoading, setisLoginForm, setUser, setUsers } from "./userSlice";
 
 export const signupUserAction = (formData) => async (dispatch) => {
   dispatch(setIsLoading(true));
@@ -41,6 +42,18 @@ export const getUserAction = () => async (dispatch) => {
   }
 
   dispatch(setUser(result.data));
+};
+
+export const getAllUserAction = () => async (dispatch) => {
+  // call axios to get user
+
+  const result = await getAllUser();
+
+  if (result?.error) {
+    return toast.error(result.message);
+  }
+
+  dispatch(setUsers(result.data));
 };
 
 //Auto Login

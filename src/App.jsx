@@ -10,6 +10,8 @@ import HomePage from "./Pages/HomePage";
 import BookDetailPage from "./Pages/BookDetailsPage";
 import StudentPrivateRoute from "./components/StudentPrivateRoute";
 import BorrowsPage from "./Pages/BorrowsPage";
+import UsersPage from "./Pages/UsersPage";
+import DashBoard from "./Pages/DashBoard";
 
 function App() {
   return (
@@ -26,9 +28,9 @@ function App() {
             </AdminPrivateRoute>
           }
         >
-          <Route path="dashboard" element={<p>Dashboard Page</p>} />
+          <Route path="dashboard" element={<DashBoard />} />
           <Route path="books" element={<BooksPage />} />
-          <Route path="users" element={<p>Users Page</p>} />
+          <Route path="users" element={<UsersPage />} />
         </Route>
 
         {/* Client/Student Routes */}

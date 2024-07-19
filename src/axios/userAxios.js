@@ -37,6 +37,19 @@ export const getUser = () => {
 
   return response;
 };
+// get all users
+export const getAllUser = () => {
+  const response = axios
+    .get(`${USER_API_URL}/all`, {
+      headers: {
+        Authorization: sessionStorage.getItem("accessJWT"),
+      },
+    })
+    .then((res) => res.data)
+    .catch((error) => console.log(error));
+
+  return response;
+};
 
 // Get access token
 export const getAccessToken = () => {

@@ -4,6 +4,7 @@ const initialState = {
   isLoading: false,
   isLoginForm: true,
   user: {},
+  users: [],
 };
 
 const userSlice = createSlice({
@@ -19,11 +20,14 @@ const userSlice = createSlice({
     setUser: (state, action) => {
       state.user = action.payload;
     },
+    setUsers: (state, action) => {
+      state.users = action.payload;
+    },
   },
 });
 
 const { reducer: userReducer, actions } = userSlice;
 
-export const { setIsLoading, setisLoginForm, setUser } = actions;
+export const { setIsLoading, setisLoginForm, setUser, setUsers } = actions;
 
 export default userReducer;
