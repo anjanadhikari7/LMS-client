@@ -1,5 +1,6 @@
 import axios from "axios";
 import { setUser } from "../redux/user/userSlice";
+import { getAuthHeader } from "./axiosHelper";
 
 const USER_API_URL = "http://localhost:8000/api/user";
 //PUBLIC ROute| Endpoint
@@ -77,6 +78,29 @@ export const logoutUser = () => {
         },
       }
     )
+    .then((res) => res.data)
+    .catch((error) => {
+      throw error;
+    });
+  return response;
+};
+
+// Update user
+export const updateUser = (User) => {
+  const response = axios
+    .patch(USER_API_URL, User, getAuthHeader())
+    .then((res) => res.data)
+    .catch((error) => {
+      throw error;
+    });
+  return response;
+};
+
+// Delete User
+
+export const deleteUser = (id) => {
+  const response = axios
+    .delete(`${USER_API_URL}/${id}`, getAuthHeader())
     .then((res) => res.data)
     .catch((error) => {
       throw error;

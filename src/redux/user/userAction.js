@@ -1,10 +1,12 @@
 import { toast } from "react-toastify";
 import {
   createUser,
+  deleteUser,
   getAccessToken,
   getAllUser,
   getUser,
   logoutUser,
+  updateUser,
 } from "../../axios/userAxios";
 
 import { setIsLoading, setisLoginForm, setUser, setUsers } from "./userSlice";
@@ -96,4 +98,31 @@ export const logoutUserAction = () => async (dispatch) => {
   // clear user state
   dispatch(setUser({}));
   toast.success(result.message);
+};
+
+// upodate user
+
+export const updateUserAction = (User) => async (dispatch) => {
+  const result = await updateUser(User);
+  if (result?.status === "error") {
+    return toast.error(result.message);
+  }
+
+  toast.success(result.message);
+
+  dispatch(getAllUser());
+};
+
+// Delete User
+
+export const deleteUserAction = (UserId) => async (dispatch) => {
+  const result = await deleteUser(UserId);
+
+  if (result?.status === "error") {
+    return toast.error(result.message);
+  }
+
+  toast.success(result.message);
+  console.log("Item deleted, fetching new list");
+  dispatch(getBooksAction());
 };

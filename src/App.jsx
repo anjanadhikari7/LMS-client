@@ -28,7 +28,7 @@ function App() {
             </AdminPrivateRoute>
           }
         >
-          <Route path="dashboard" element={<DashBoard />} />
+          <Route path="" element={<DashBoard />} />
           <Route path="books" element={<BooksPage />} />
           <Route path="users" element={<UsersPage />} />
         </Route>

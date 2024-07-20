@@ -22,6 +22,10 @@ const BorrowsPage = () => {
     dispatch(returnBorrowAction(borrow._id));
   };
 
+  const [showModal, setShowModal] = useState(false);
+  const handleOnReview = (borrow) => {
+    setShowModal(true);
+  };
   return (
     <>
       <Container>
@@ -54,7 +58,7 @@ const BorrowsPage = () => {
                   {borrow.is_returned && !borrow.has_review && (
                     <Button
                       variant="outline-primary"
-                      // onClick={() => handleOnReview(borrow)}
+                      onClick={() => handleOnReview(borrow)}
                     >
                       Review Book
                     </Button>

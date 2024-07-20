@@ -1,7 +1,7 @@
 import { Button, Stack, Table } from "react-bootstrap";
 import { BsPencil, BsTrash } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllUserAction } from "../redux/user/userAction";
+import { deleteUserAction, getAllUserAction } from "../redux/user/userAction";
 import { useEffect } from "react";
 
 const UsersTable = (props) => {
@@ -27,7 +27,7 @@ const UsersTable = (props) => {
   }, [dispatch]);
   const handleOnDelete = (userId) => {
     if (window.confirm("Are you sure you want to delete this user?")) {
-      dispatch(deleteBookAction(userId)); // Dispatch delete action
+      dispatch(deleteUserAction(userId)); // Dispatch delete action
     }
   };
   return (
